@@ -20,6 +20,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.nicmic.gatherhear.R;
+import com.nicmic.gatherhear.utils.LogUtils;
 import com.nicmic.gatherhear.utils.LrcUtils;
 
 /**
@@ -229,7 +230,7 @@ public class LrcView extends View implements ILrcView{
 
 		switch (event.getAction()) {
 		case MotionEvent.ACTION_DOWN:
-			Log.d(TAG,"down,mLastMotionY:"+mLastMotionY);
+			LogUtils.d(TAG,"down,mLastMotionY:"+mLastMotionY);
 			mLastMotionY = event.getY();
 			mIsFirstMove = true;
 			invalidate();
@@ -252,11 +253,11 @@ public class LrcView extends View implements ILrcView{
 		case MotionEvent.ACTION_MOVE:
 
 			if(event.getPointerCount() == 2){
-				Log.d(TAG, "two move");
+				LogUtils.d(TAG, "two move");
 				doScale(event);
 				return true;
 			}
-			Log.d(TAG, "one move");
+			LogUtils.d(TAG, "one move");
 			// single pointer mode ,seek
 			if(mDisplayMode == DISPLAY_MODE_SCALE){
 				 //if scaling but pointer become not two ,do nothing.
@@ -283,7 +284,7 @@ public class LrcView extends View implements ILrcView{
 		if(mDisplayMode == DISPLAY_MODE_SEEK){
 			// if Seeking but pointer become two, become to scale mode
 			mDisplayMode = DISPLAY_MODE_SCALE;
-			Log.d(TAG, "two move but teaking ...change mode");
+			LogUtils.d(TAG, "two move but teaking ...change mode");
 			return;
 		}
 		// two pointer mode , scale font
@@ -294,7 +295,7 @@ public class LrcView extends View implements ILrcView{
 			setTwoPointerLocation(event);
 		}
 		int scaleSize = getScale(event);
-		Log.d(TAG,"scaleSize:" + scaleSize);
+		LogUtils.d(TAG,"scaleSize:" + scaleSize);
 		if(scaleSize != 0){
 			setNewFontSize(scaleSize);
 			invalidate();
@@ -311,7 +312,7 @@ public class LrcView extends View implements ILrcView{
 		}
 		mDisplayMode = DISPLAY_MODE_SEEK;
 		int rowOffset = Math.abs((int) offsetY / mLrcFontSize); // highlight row offset.
-		Log.d(TAG, "move new hightlightrow : " + mHignlightRow + " offsetY: " + offsetY + " rowOffset:" + rowOffset);
+		LogUtils.d(TAG, "move new hightlightrow : " + mHignlightRow + " offsetY: " + offsetY + " rowOffset:" + rowOffset);
 		if(offsetY < 0){
 			// finger move up
 			mHignlightRow += rowOffset;
@@ -346,7 +347,7 @@ public class LrcView extends View implements ILrcView{
 
 	// get font scale offset
 	private int getScale(MotionEvent event){
-		Log.d(TAG,"scaleSize getScale");
+		LogUtils.d(TAG,"scaleSize getScale");
 		float x0 = event.getX(0);
 		float y0 = event.getY(0);
 		float x1 = event.getX(1);
@@ -368,7 +369,7 @@ public class LrcView extends View implements ILrcView{
 			zoomin = newYoffset > oldYOffset ? true : false;
 		}
 
-		Log.d(TAG,"scaleSize maxOffset:" + maxOffset);
+		LogUtils.d(TAG,"scaleSize maxOffset:" + maxOffset);
 
 		if(zoomin)
 			return (int)(maxOffset / 10);
@@ -393,7 +394,7 @@ public class LrcView extends View implements ILrcView{
             return null;
         }
 		timePassed = time;
-        Log.d(TAG, "seekLrcToTime:" + time);
+        LogUtils.d(TAG, "seekLrcToTime:" + time);
         // find row
         for(int i = 0; i < mLrcRows.size(); i++) {
             LrcRow current = mLrcRows.get(i);

@@ -10,6 +10,8 @@ import java.util.List;
 
 import android.util.Log;
 
+import com.nicmic.gatherhear.utils.LogUtils;
+
 /**
  * 
  * describe the lyric line
@@ -34,7 +36,7 @@ public class LrcRow implements Comparable<LrcRow>{
         this.strTime = strTime;
         this.time = time;
         this.content = content;
-        Log.d(TAG,"strTime:" + strTime + " time:" + time + " content:" + content);
+        LogUtils.d(TAG,"strTime:" + strTime + " time:" + time + " content:" + content);
     }
     
     /**

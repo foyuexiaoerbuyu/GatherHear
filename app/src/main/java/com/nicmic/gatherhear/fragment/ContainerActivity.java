@@ -34,6 +34,7 @@ import com.nicmic.gatherhear.lrc.LrcView;
 import com.nicmic.gatherhear.service.MusicService;
 import com.nicmic.gatherhear.utils.Dialogs;
 import com.nicmic.gatherhear.utils.ImageUtils;
+import com.nicmic.gatherhear.utils.LogUtils;
 import com.nicmic.gatherhear.utils.MusicUtils;
 import com.nicmic.gatherhear.widget.MusicNotification;
 import com.github.siyamed.shapeimageview.CircularImageView;
@@ -465,7 +466,7 @@ public class ContainerActivity extends BaseActivity implements View.OnClickListe
             playList.setAdapter(adapter_playlist);
             playList.setSelection(PlayList.position);
             adapter_playlist.notifyDataSetInvalidated();
-            Log.e("ContainerActivity", "初始化播放列表并定位到当前播放位置");
+            LogUtils.e("ContainerActivity", "初始化播放列表并定位到当前播放位置");
         }
 
         linearLayout.addView(headerView);

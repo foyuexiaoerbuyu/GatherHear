@@ -14,6 +14,7 @@ import java.util.List;
 
 import android.util.Log;
 
+import com.nicmic.gatherhear.utils.LogUtils;
 import com.nicmic.gatherhear.utils.LrcUtils;
 
 /** default lrc builder,convert raw lrc string to lrc rows */
@@ -21,7 +22,7 @@ public class DefaultLrcBuilder implements  ILrcBuilder{
     static final String TAG = "DefaultLrcBuilder";
 
     public List<LrcRow> getLrcRows(String rawLrc) {
-        Log.d(TAG,"getLrcRows by rawString");
+        LogUtils.d(TAG,"getLrcRows by rawString");
         if(rawLrc == null || rawLrc.length() == 0){
             Log.e(TAG,"getLrcRows rawLrc null or empty");
             return null;
@@ -36,7 +37,7 @@ public class DefaultLrcBuilder implements  ILrcBuilder{
         try{
             do{
                 line = br.readLine();
-                Log.d(TAG,"lrc raw line:" + line);
+                LogUtils.d(TAG,"lrc raw line:" + line);
                 if(line != null && line.length() > 0){
                     List<LrcRow> lrcRows = LrcRow.createRows(line, offset);
                     if(lrcRows != null && lrcRows.size() > 0){

@@ -47,6 +47,7 @@ import com.nicmic.gatherhear.lrc.LrcView;
 import com.nicmic.gatherhear.service.MusicService;
 import com.nicmic.gatherhear.utils.Dialogs;
 import com.nicmic.gatherhear.utils.ImageUtils;
+import com.nicmic.gatherhear.utils.LogUtils;
 import com.nicmic.gatherhear.utils.LrcUtils;
 import com.nicmic.gatherhear.utils.MusicUtils;
 import com.nicmic.gatherhear.widget.CDView;
@@ -1124,7 +1125,7 @@ public class MusicFragment extends Fragment implements View.OnClickListener, Vie
         lrc_view.setListener(new ILrcView.LrcViewListener() {
             public void onLrcSeeked(int newPosition, LrcRow row) {
                 if (MusicService.player != null) {
-                    Log.d("MusicFragment", "onLrcSeeked:" + row.time);
+                    LogUtils.d("MusicFragment", "onLrcSeeked:" + row.time);
                     MusicService.player.seekTo((int)row.time);
                 }
             }
@@ -1165,7 +1166,7 @@ public class MusicFragment extends Fragment implements View.OnClickListener, Vie
      */
     private void loadLrc(){
         String lrc = LrcUtils.getLrc();
-        Log.d("MusicFragment", "lrc:" + lrc);
+        LogUtils.d("MusicFragment", "lrc:" + lrc);
 
         ILrcBuilder builder = new DefaultLrcBuilder();
         List<LrcRow> rows = builder.getLrcRows(lrc);
