@@ -7,6 +7,7 @@ import android.os.IBinder;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.nicmic.gatherhear.utils.LogUtils;
 import com.nicmic.gatherhear.App;
 import com.nicmic.gatherhear.adapter.PlayListAdapter;
 import com.nicmic.gatherhear.bean.Music;
@@ -52,7 +53,7 @@ public class MusicService extends Service {
     public void onCreate() {
         super.onCreate();
 
-        Log.e("MusicService","onCreate()");
+        LogUtils.e("MusicService", "onCreate()");
         if(player == null){
             player = new MediaPlayer();
 
@@ -64,7 +65,7 @@ public class MusicService extends Service {
                     PlayList.playStatus = INITIAL;
                     //播放下一首
                     playNext();
-                    Log.e("MusicService", "播放完成，自动播放下一首");
+                    LogUtils.e("MusicService", "播放完成，自动播放下一首");
                 }
             });
             player.setOnErrorListener(new MediaPlayer.OnErrorListener() {
@@ -85,7 +86,7 @@ public class MusicService extends Service {
                         Toast.makeText(App.sContext, "歌名：" + music.getTitle() + "\n歌手：" + music.getArtist() +
                                 "\n原因：歌曲文件不存在" + "\n操作：删除该歌曲记录", Toast.LENGTH_LONG).show();
                     }
-                    Log.e("音乐出错了", mp.getAudioSessionId() + "\nwhat = " + what + " , " + extra);
+                    LogUtils.e("音乐出错了", mp.getAudioSessionId() + "\nwhat = " + what + " , " + extra);
                     return true;
                 }
             });
@@ -117,7 +118,7 @@ public class MusicService extends Service {
                     public void onPrepared(MediaPlayer mp) {
                         player.seekTo(MusicUtils.getPlayListProgress(getApplicationContext()));
                         PlayList.playStatus = PAUSE;
-                        Log.e("ContainerActivity", "初始化player的数据");
+                        LogUtils.e("ContainerActivity", "初始化player的数据");
                     }
                 });
 
@@ -125,7 +126,7 @@ public class MusicService extends Service {
                 e.printStackTrace();
             }
         }
-        Log.e("MusicService","onStartCommand()");
+        LogUtils.e("MusicService", "onStartCommand()");
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -172,7 +173,7 @@ public class MusicService extends Service {
      * 播放或暂停
      */
     public static void playOrPause(){
-        Log.e("MusicService", "播放状态:" + PlayList.playStatus);
+        LogUtils.e("MusicService", "播放状态:" + PlayList.playStatus);
         if (PlayList.playStatus == INITIAL){
             MusicService.play();
         }else if (PlayList.playStatus == PLAYING) {
@@ -307,7 +308,7 @@ public class MusicService extends Service {
         MusicUtils.savePlayPosition();
         //保存最近播放的时间
         MusicUtils.savePlayTime();
-        Log.e("MusicService", "下一首，保存了播放列表的状态和最近播放时间");
+        LogUtils.e("MusicService", "下一首，保存了播放列表的状态和最近播放时间");
     }
 
     /**
@@ -321,7 +322,7 @@ public class MusicService extends Service {
         MusicUtils.savePlayPosition();
         //保存最近播放的时间
         MusicUtils.savePlayTime();
-        Log.e("MusicService", "上一首，保存了播放列表的状态和最近播放时间");
+        LogUtils.e("MusicService", "上一首，保存了播放列表的状态和最近播放时间");
     }
 
     /**
@@ -363,19 +364,19 @@ public class MusicService extends Service {
         //更新MainFragment的UI
         if (MainFragment.staticHandler != null) {
             MainFragment.staticHandler.sendEmptyMessage(MainFragment.UPDATE_UI);
-            Log.e("MusicService", "更新主页面的UI");
+            LogUtils.e("MusicService", "更新主页面的UI");
         }
 
         //更新底部音乐的UI
         if(ContainerActivity.staticHandler != null){
             ContainerActivity.staticHandler.sendEmptyMessage(ContainerActivity.UPDATE_BOTTOM_MUSIC);
-            Log.e("MusicService", "更新底部音乐信息");
+            LogUtils.e("MusicService", "更新底部音乐信息");
         }
 
         //更新音乐播放界面的UI
         if(MusicFragment.staticHandler != null){
             MusicFragment.staticHandler.sendEmptyMessage(MusicFragment.UPDATE_UI);
-            Log.e("MusicService", "更新音乐播放界面");
+            LogUtils.e("MusicService", "更新音乐播放界面");
         }
 
         //以下所有界面的UI更新前都要先判断播放的列表是否属于当前界面
@@ -383,19 +384,19 @@ public class MusicService extends Service {
         //更新本地音乐的UI
         if(MainFragment.localMusicFragment.staticHandler != null){
             MainFragment.localMusicFragment.staticHandler.sendEmptyMessage(LocalMusicFragment.UPDATE_UI_SONG);
-            Log.e("MusicService", "更新本地音乐单曲界面");
+            LogUtils.e("MusicService", "更新本地音乐单曲界面");
         }
 
         //更新SongFragment的UI
         if(SongFragment.staticHandler != null){
             SongFragment.staticHandler.sendEmptyMessage(SongFragment.UPDATE_UI);
-            Log.e("MusicService", "更新SongFragment界面");
+            LogUtils.e("MusicService", "更新SongFragment界面");
         }
 
         //更新MusicMenuFragment的UI
         if(MusicMenuFragment.staticHandler != null){
             MusicMenuFragment.staticHandler.sendEmptyMessage(MusicMenuFragment.UPDATE_UI);
-            Log.e("MusicService", "更新MusicMenuFragment界面");
+            LogUtils.e("MusicService", "更新MusicMenuFragment界面");
         }
 
         //更新音乐播放界面的播放列表

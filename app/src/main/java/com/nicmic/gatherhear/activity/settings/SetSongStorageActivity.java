@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.nicmic.gatherhear.R;
 import com.nicmic.gatherhear.activity.BaseActivity;
 import com.nicmic.gatherhear.utils.FileUtils;
+import com.nicmic.gatherhear.utils.LogUtils;
 import com.r0adkll.slidr.Slidr;
 import com.rey.material.widget.CheckBox;
 
@@ -104,9 +105,9 @@ public class SetSongStorageActivity extends BaseActivity {
             String SDAvailableSize = FileUtils.getSDAvailableSize();
             tv_inner_total_size.setText(SDTotalSize);
             tv_inner_available_size.setText(SDAvailableSize);
-            Log.e("SetSongStorageActivity", "内置SD卡存在");
-            Log.e("SetSongStorageActivity", "SDTotalSize = " + SDTotalSize);
-            Log.e("SetSongStorageActivity", "SDAvailableSize = " + SDAvailableSize);
+            LogUtils.e("SetSongStorageActivity", "内置SD卡存在");
+            LogUtils.e("SetSongStorageActivity", "SDTotalSize = " + SDTotalSize);
+            LogUtils.e("SetSongStorageActivity", "SDAvailableSize = " + SDAvailableSize);
         }
         //存储路径在内置SD卡上
         if (FileUtils.getAppFilePath() == FileUtils.SD_CARD_INNER) {
@@ -120,9 +121,9 @@ public class SetSongStorageActivity extends BaseActivity {
             String extSDAvailableSize = FileUtils.getExtSDAvailableSize();
             tv_ext_total_size.setText(extSDTotalSize);
             tv_ext_available_size.setText(extSDAvailableSize);
-            Log.e("SetSongStorageActivity", "外置SD卡存在");
-            Log.e("SetSongStorageActivity", "extSDTotalSize = " + extSDTotalSize);
-            Log.e("SetSongStorageActivity", "extSDAvailableSize = " + extSDAvailableSize);
+            LogUtils.e("SetSongStorageActivity", "外置SD卡存在");
+            LogUtils.e("SetSongStorageActivity", "extSDTotalSize = " + extSDTotalSize);
+            LogUtils.e("SetSongStorageActivity", "extSDAvailableSize = " + extSDAvailableSize);
         }
         //存储路径在外置SD卡上
         if (FileUtils.getAppFilePath() == FileUtils.SD_CARD_EXT) {

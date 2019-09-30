@@ -26,6 +26,7 @@ import com.nicmic.gatherhear.bean.Music;
 import com.nicmic.gatherhear.bean.PlayList;
 import com.nicmic.gatherhear.service.MusicService;
 import com.nicmic.gatherhear.utils.ImageUtils;
+import com.nicmic.gatherhear.utils.LogUtils;
 import com.nicmic.gatherhear.utils.MusicUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -327,15 +328,15 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         if (PlayList.isEmpty()) {//音乐列表为空
             btnPlayMain.setImageResource(R.drawable.default_cd_cover);
             Toast.makeText(getActivity(), "当前没有可播放的音乐", Toast.LENGTH_SHORT).show();
-            Log.e("MainFragment", "播放列表没有音乐");
+            LogUtils.e("MainFragment", "播放列表没有音乐");
         }else {
             MusicService.playOrPause();
             if (MusicService.player.isPlaying()){
                 icon_play_main.setImageResource(R.drawable.btn_pause_white);
-                Log.e("MainFragment", "停止播放");
+                LogUtils.e("MainFragment", "停止播放");
             }else {
                 icon_play_main.setImageResource(R.drawable.btn_play_arrow_white);
-                Log.e("MainFragment", "继续播放");
+                LogUtils.e("MainFragment", "继续播放");
             }
             //TODO:先去加载音乐是否有歌手图片，没有的话使用默认的图片(联网实现，未实现)
         }
@@ -426,7 +427,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
             showedFragment = null;
             hidedFragment = null;
         }
-        Log.e("MainFragment", "执行返回方法");
+        LogUtils.e("MainFragment", "执行返回方法");
 
     }
 

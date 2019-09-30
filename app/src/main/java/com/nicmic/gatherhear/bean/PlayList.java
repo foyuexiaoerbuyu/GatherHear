@@ -1,9 +1,9 @@
 package com.nicmic.gatherhear.bean;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.nicmic.gatherhear.service.MusicService;
+import com.nicmic.gatherhear.utils.LogUtils;
 import com.nicmic.gatherhear.utils.MusicUtils;
 
 import java.util.ArrayList;
@@ -32,66 +32,71 @@ public class PlayList {
     public static int playStatus = 0;
 
     /**
-     *判断播放列表是否为空
+     * 判断播放列表是否为空
+     *
      * @return
      */
-    public static boolean isEmpty(){
-        if (musics.isEmpty()){
+    public static boolean isEmpty() {
+        if (musics.isEmpty()) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
 
     /**
      * 往播放列表中添加一首音乐
+     *
      * @param music
      */
-    public static void addMusic(Music music){
+    public static void addMusic(Music music) {
         musics.add(music);
     }
 
     /**
      * 往播放列表中添加多首音乐
+     *
      * @param list
      */
-    public static void addMusics(List<Music> list){
+    public static void addMusics(List<Music> list) {
         musics.addAll(list);
     }
 
     /**
      * 设置播放列表
      * （每次点击某个音乐都需要调用此方法）
-     * @param list 播放集合
+     *
+     * @param list     播放集合
      * @param position 当前播放的位置
      */
-    public static void setPlayList(List<Music> list, int position){
-        if (!musics.equals(list)){
+    public static void setPlayList(List<Music> list, int position) {
+        if (!musics.equals(list)) {
             musics.clear();
             musics.addAll(list);
         }
         PlayList.position = position;
         PlayList.playStatus = MusicService.INITIAL;
-        Log.e("PlayList", "数量：" + musics.size());
-        Log.e("PlayList", "位置：" + position);
+        LogUtils.e("PlayList", "数量：" + musics.size());
+        LogUtils.e("PlayList", "位置：" + position);
     }
 
     /**
      * 获得当前正在播放的音乐
+     *
      * @return
      */
-    public static Music getPlayingMusic(){
-        if (musics.isEmpty()){
+    public static Music getPlayingMusic() {
+        if (musics.isEmpty()) {
             return null;
         }
-        return  musics.get(position);
+        return musics.get(position);
     }
 
     /**
      * 清空播放列表
      */
-    public static boolean clearPlayList(Context context){
-        if (isEmpty()){
+    public static boolean clearPlayList(Context context) {
+        if (isEmpty()) {
             return false;
         }
         musics.clear();

@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 
+import com.nicmic.gatherhear.utils.LogUtils;
+
 import com.nicmic.gatherhear.service.MusicService;
 
 public class PhoneBroadcastReceiver extends BroadcastReceiver {
@@ -17,7 +19,7 @@ public class PhoneBroadcastReceiver extends BroadcastReceiver {
     private static boolean isPlaying = false;
 
     public PhoneBroadcastReceiver() {
-        Log.e(TAG, "开启了电话广播");
+        LogUtils.e(TAG, "开启了电话广播");
     }
 
     @Override
@@ -26,7 +28,7 @@ public class PhoneBroadcastReceiver extends BroadcastReceiver {
         if (intent.getAction().equals(Intent.ACTION_NEW_OUTGOING_CALL)) {
             mIncomingFlag = false;
             String phoneNumber = intent.getStringExtra(Intent.EXTRA_PHONE_NUMBER);
-            Log.e(TAG, "拨出电话:" + phoneNumber);
+            LogUtils.e(TAG, "拨出电话:" + phoneNumber);
             //将正在播放的音乐暂停
             if (MusicService.player != null && MusicService.player.isPlaying()) {
                 isPlaying = true;
@@ -40,7 +42,7 @@ public class PhoneBroadcastReceiver extends BroadcastReceiver {
 
                 case TelephonyManager.CALL_STATE_RINGING:
                     mIncomingNumber = intent.getStringExtra("incoming_number");
-                    Log.e(TAG, "来电 :" + mIncomingNumber);
+                    LogUtils.e(TAG, "来电 :" + mIncomingNumber);
                     //将正在播放的音乐暂停
                     if (MusicService.player != null && MusicService.player.isPlaying()) {
                         isPlaying = true;
@@ -49,12 +51,12 @@ public class PhoneBroadcastReceiver extends BroadcastReceiver {
                     break;
                 case TelephonyManager.CALL_STATE_OFFHOOK:
                     if (mIncomingFlag) {
-                        Log.e(TAG, "接通电话 :" + mIncomingNumber);
+                        LogUtils.e(TAG, "接通电话 :" + mIncomingNumber);
                     }
                     break;
                 case TelephonyManager.CALL_STATE_IDLE:
                     if (mIncomingFlag) {
-                        Log.e(TAG, "incoming IDLE（挂断电话）");
+                        LogUtils.e(TAG, "incoming IDLE（挂断电话）");
                         //将正在播放的音乐暂停
                         if (isPlaying) {
                             isPlaying = false;

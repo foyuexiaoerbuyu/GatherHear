@@ -186,17 +186,17 @@ public class MusicFragment extends Fragment implements View.OnClickListener, Vie
                     break;
                 case BEGIN_LRC_PLAY:
                     beginLrcPlay();
-                    Log.e(getTag(), "开始歌词播放2222222222222222222222222");
+                    LogUtils.e(getTag(), "开始歌词播放2222222222222222222222222");
                     break;
                 case STOP_LRC_PLAY:
                     stopLrcPlay();
-                    Log.e(getTag(), "取消歌词播放11111111111111111");
+                    LogUtils.e(getTag(), "取消歌词播放11111111111111111");
                     break;
                 case RECOVER_LAST_STATUS:
                     int progress = msg.arg1;
                     int duration = msg.arg2;
                     recoverLastStatus(progress, duration);
-                    Log.e(getTag(), "恢复进度条最近一次保存的状态");
+                    LogUtils.e(getTag(), "恢复进度条最近一次保存的状态");
                     break;
                 case UPDATE_MINI_LRC:
                     Bundle bundle = msg.getData();
@@ -339,7 +339,7 @@ public class MusicFragment extends Fragment implements View.OnClickListener, Vie
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        Log.e("MusicFragment", "onHiddenChanged");
+        LogUtils.e("MusicFragment", "onHiddenChanged");
         //此方法未使用
 //        AnimUtil.ANIM_MUSIC_FRAGMENT_SHOW_NOTIFICATION = true;
     }
@@ -347,7 +347,7 @@ public class MusicFragment extends Fragment implements View.OnClickListener, Vie
     @Override
     public void onPause() {
         super.onPause();
-        Log.e("MusicFragment", "onPause 在手机屏幕关屏后或切换到其他Activity触发此方法");
+        LogUtils.e("MusicFragment", "onPause 在手机屏幕关屏后或切换到其他Activity触发此方法");
         //关闭提示下一首的通知
         if (AnimUtil.getNextMusicNotification()) {
             AnimUtil.ANIM_MUSIC_FRAGMENT_SHOW_NOTIFICATION = false;
@@ -430,7 +430,7 @@ public class MusicFragment extends Fragment implements View.OnClickListener, Vie
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 seekBar.setProgress(progress);
                 tv_progress.setText(MusicUtils.getTimeString(progress));
-//                Log.e("MusicFragment", "进度条已经改变了");
+//                LogUtils.e("MusicFragment", "进度条已经改变了");
             }
 
             //在手指开始拖动进度条时调用
@@ -440,7 +440,7 @@ public class MusicFragment extends Fragment implements View.OnClickListener, Vie
                     handler.sendEmptyMessage(STOP_UPDATE_PROGRESS);
                 }
                 tv_progress.setText(seekBar.getProgress() + "");
-                Log.e("MusicFragment", "开始拖动进度条");
+                LogUtils.e("MusicFragment", "开始拖动进度条");
             }
 
             //在手指拖动进度条后离开时调用
@@ -454,7 +454,7 @@ public class MusicFragment extends Fragment implements View.OnClickListener, Vie
                     int progress = seekBar.getProgress();
                     MusicService.player.seekTo(progress);
                 }
-                Log.e("MusicFragment", "停止拖动进度条");
+                LogUtils.e("MusicFragment", "停止拖动进度条");
             }
         });
     }
@@ -530,13 +530,13 @@ public class MusicFragment extends Fragment implements View.OnClickListener, Vie
             if (isPlayLast){
                 titleAnim(music);
                 isPlayLast = false;
-                Log.e("MusicFragment", "播放上一首标题的动画效果");
+                LogUtils.e("MusicFragment", "播放上一首标题的动画效果");
             }else if (isPlayNext){
                 titleAnim(music);
                 isPlayNext = false;
-                Log.e("MusicFragment", "播放下一首标题的动画效果");
+                LogUtils.e("MusicFragment", "播放下一首标题的动画效果");
             }else{
-                Log.e("MusicFragment", "无动画设置标题和歌手");
+                LogUtils.e("MusicFragment", "无动画设置标题和歌手");
                 tv_title.setText(music.getTitle());
                 tv_artist.setText(music.getArtist());
             }
@@ -569,7 +569,7 @@ public class MusicFragment extends Fragment implements View.OnClickListener, Vie
             if (bitmap != null) {
                 cd_view.setImage(bitmap);
             }else {
-                Log.e("MusicFragment", "没有获取到图片");
+                LogUtils.e("MusicFragment", "没有获取到图片");
             }
         }
     }
@@ -600,12 +600,12 @@ public class MusicFragment extends Fragment implements View.OnClickListener, Vie
             playList.setAdapter(adapter_playlist);
             playList.setSelection(PlayList.position);
             adapter_playlist.notifyDataSetInvalidated();
-            Log.e("MusicFragment", "初始化播放列表并定位到当前播放位置");
+            LogUtils.e("MusicFragment", "初始化播放列表并定位到当前播放位置");
         } else {
             tv_title_and_num.setText("播放列表(" + PlayList.musics.size() + ")");
             playList.setSelection(PlayList.position);
             adapter_playlist.notifyDataSetInvalidated();
-            Log.e("MusicFragment", "更新播放列表并定位到当前播放位置");
+            LogUtils.e("MusicFragment", "更新播放列表并定位到当前播放位置");
         }
 
     }
@@ -798,13 +798,13 @@ public class MusicFragment extends Fragment implements View.OnClickListener, Vie
             if (Message.obtain(handler, UPDATE_PROGRESS) == null){
                 handler.sendEmptyMessage(UPDATE_PROGRESS);
             }
-            Log.e("MusicFragment", "开始更新音乐界面的进度条");
+            LogUtils.e("MusicFragment", "开始更新音乐界面的进度条");
         } else {
             hideMusicFragment(fragment_music, cx, cy);
             showMusicFragment = true;
             //由于切换到其他页面，要停止更新音乐界面的进度条
 //            handler.sendEmptyMessage(STOP_UPDATE_PROGRESS);
-            Log.e("MusicFragment", "停止更新音乐界面的进度条");
+            LogUtils.e("MusicFragment", "停止更新音乐界面的进度条");
         }
         MusicService.updateUI();
     }
@@ -1060,15 +1060,15 @@ public class MusicFragment extends Fragment implements View.OnClickListener, Vie
             Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.default_cd_cover);
             cd_view.setImage(ImageUtils.scaleBitmap(bmp, (int) (App.sScreenWidth * 0.7)));
             Toast.makeText(getActivity(), "当前没有可播放的音乐", 0).show();
-            Log.e("MusicFragment", "播放列表没有音乐");
+            LogUtils.e("MusicFragment", "播放列表没有音乐");
         }else{
             MusicService.playOrPause();
             if (MusicService.player.isPlaying()){
                 cd_view.pause();
-                Log.e("MusicFragment", "停止播放");
+                LogUtils.e("MusicFragment", "停止播放");
             }else {
                 cd_view.start();
-                Log.e("MusicFragment", "继续播放");
+                LogUtils.e("MusicFragment", "继续播放");
             }
         }
         //TODO:先去加载音乐是否有歌手图片，没有的话使用默认的图片(联网实现，未实现)

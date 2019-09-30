@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import com.nicmic.gatherhear.utils.LogUtils;
 import android.util.Log;
 
 import com.nicmic.gatherhear.utils.LogUtils;
@@ -24,7 +25,7 @@ public class DefaultLrcBuilder implements  ILrcBuilder{
     public List<LrcRow> getLrcRows(String rawLrc) {
         LogUtils.d(TAG,"getLrcRows by rawString");
         if(rawLrc == null || rawLrc.length() == 0){
-            Log.e(TAG,"getLrcRows rawLrc null or empty");
+            LogUtils.e(TAG, "getLrcRows rawLrc null or empty");
             return null;
         }
         StringReader reader = new StringReader(rawLrc);
@@ -54,7 +55,7 @@ public class DefaultLrcBuilder implements  ILrcBuilder{
             }
             
         }catch(Exception e){
-            Log.e(TAG,"parse exceptioned:" + e.getMessage());
+            LogUtils.e(TAG, "parse exceptioned:" + e.getMessage());
             return null;
         }finally{
             try {

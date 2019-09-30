@@ -143,7 +143,7 @@ public class LrcView extends View implements ILrcView{
 		// 3, draw rows below highlight row.
 
 //		long time = mLrcRows.get(mHignlightRow).time;
-//		Log.e("LrcView", timePassed + " -- " + time);
+//		LogUtils.e("LrcView", timePassed + " -- " + time);
 //		long offsetY = timePassed - time;
 
 		// 1 highlight row

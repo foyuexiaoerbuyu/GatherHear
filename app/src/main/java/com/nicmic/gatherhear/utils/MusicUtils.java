@@ -198,7 +198,7 @@ public class MusicUtils {
             }
             //删除musicmenu_music表中的关系
             int column2 = db.delete("musicmenu_music", "music_id = ?", new String[]{music.getId()});
-            Log.e("MusicUtils", "共删除" + column2 + "张歌单中的该歌曲");
+            LogUtils.e("MusicUtils", "共删除" + column2 + "张歌单中的该歌曲");
 
             db.setTransactionSuccessful();
             return true;
@@ -250,7 +250,7 @@ public class MusicUtils {
         if (position != -1){
             //2.移除的是正在播放的歌曲
             if (music.getId().equals(PlayList.getPlayingMusic().getId())) {
-                Log.e("MusicUtils", "移除的是正在播放的歌曲");
+                LogUtils.e("MusicUtils", "移除的是正在播放的歌曲");
                 //3.歌曲移除后播放列表没有歌曲
                 if (PlayList.musics.size() == 1) {
                     //3.1清空播放列表
@@ -258,7 +258,7 @@ public class MusicUtils {
                     //3.2停止播放
                     PlayList.playStatus = MusicService.PLAYING;
                     MusicService.stop();
-                    Log.e("MusicUtils", "移除后播放列表没有歌曲，停止播放");
+                    LogUtils.e("MusicUtils", "移除后播放列表没有歌曲，停止播放");
                 }
                 //4.歌曲移除后播放列表有歌曲
                 if (PlayList.musics.size() > 1) {
@@ -266,11 +266,11 @@ public class MusicUtils {
                     PlayList.musics.remove(position);
                     //4.2停止播放，并将播放的歌曲指定为播放列表的第一首歌曲
                     MusicService.playFirst();
-                    Log.e("MusicUtils", "移除后播放列表有歌曲，播放第一首");
+                    LogUtils.e("MusicUtils", "移除后播放列表有歌曲，播放第一首");
                 }
             }else{
             //2.移除的不是正在播放的歌曲
-                Log.e("MusicUtils", "移除的不是正在播放的歌曲");
+                LogUtils.e("MusicUtils", "移除的不是正在播放的歌曲");
                 //3移除在播放列表中的该歌曲
                 PlayList.musics.remove(position);
             }
@@ -472,9 +472,9 @@ public class MusicUtils {
             int column = db.update("music", values, "_id = ?", new String[]{music.getId()});
             db.close();
             if (column == 1) {
-                Log.e("MusicUtils", "savePlayTime：修改最近播放时间成功");
+                LogUtils.e("MusicUtils", "savePlayTime：修改最近播放时间成功");
             }else{
-                Log.e("MusicUtils", "savePlayTime：修改最近播放时间失败");
+                LogUtils.e("MusicUtils", "savePlayTime：修改最近播放时间失败");
             }
         }
     }
@@ -551,7 +551,7 @@ public class MusicUtils {
         if (MusicService.player != null && MusicService.player.getDuration() != 0) {
             editor.putInt("progress", MusicService.player.getCurrentPosition());
             editor.putInt("duration", MusicService.player.getDuration());
-            Log.e("MusicUtils", MusicUtils.getTimeString(MusicService.player.getCurrentPosition()) + "/" + MusicUtils.getTimeString(MusicService.player.getDuration()));
+            LogUtils.e("MusicUtils", MusicUtils.getTimeString(MusicService.player.getCurrentPosition()) + "/" + MusicUtils.getTimeString(MusicService.player.getDuration()));
         }
 
         editor.commit();
@@ -688,7 +688,7 @@ public class MusicUtils {
         int column = db.update("music", values, "_id = ?", new String[]{music.getId()});
         db.close();
         if (column == 1){
-            Log.e("MusicUtils", "addRemoveMyLike修改了一行数据");
+            LogUtils.e("MusicUtils", "addRemoveMyLike修改了一行数据");
         }
     }
 
@@ -720,10 +720,11 @@ public class MusicUtils {
         //删除歌单和歌曲关联表信息
         int column2 = db.delete("musicmenu_music", "musicmenu_id = ?", new String[]{musicMenu.getId()});
         if (column1 == 1){
-            Log.e("MusicUtils", "删除一张歌单成功");
-            Log.e("MusicUtils", "共删除了歌单和歌曲关联表中的记录:" + column2);;
+            LogUtils.e("MusicUtils", "删除一张歌单成功");
+            LogUtils.e("MusicUtils", "共删除了歌单和歌曲关联表中的记录:" + column2);
+            ;
         }else{
-            Log.e("MusicUtils", "删除一张歌单失败");
+            LogUtils.e("MusicUtils", "删除一张歌单失败");
         }
         db.close();
     }
@@ -742,9 +743,9 @@ public class MusicUtils {
         values.put("desc", musicMenu.getDesc());
         int column = db.update("musicmenu", values, "_id = ?", new String[]{musicMenu.getId()});
         if (column == 1){
-            Log.e("MusicUtils", "modefyMusicMenu:修改一张歌单信息成功");
+            LogUtils.e("MusicUtils", "modefyMusicMenu:修改一张歌单信息成功");
         }else{
-            Log.e("MusicUtils", "modefyMusicMenu:修改一张歌单信息失败");
+            LogUtils.e("MusicUtils", "modefyMusicMenu:修改一张歌单信息失败");
         }
 
         db.close();
@@ -869,9 +870,9 @@ public class MusicUtils {
         values.put("artist", music.getArtist());
         int column = db.update("music", values, "_id = ?", new String[]{music.getId()});
         if (column == 1){
-            Log.e("MusicUtils", "modefyMusicInfo:修改歌曲信息成功");
+            LogUtils.e("MusicUtils", "modefyMusicInfo:修改歌曲信息成功");
         }else{
-            Log.e("MusicUtils", "modefyMusicInfo:修改歌曲信息失败");
+            LogUtils.e("MusicUtils", "modefyMusicInfo:修改歌曲信息失败");
         }
 
         db.close();
@@ -1080,7 +1081,7 @@ public class MusicUtils {
             musics.addAll(selectedMusics);
 
             String word = String.valueOf(words[i]);
-            Log.e("MusicUtils", word + " : " + musics.size());
+            LogUtils.e("MusicUtils", word + " : " + musics.size());
             for (int j = 0; j < musics.size(); j++) {
                 if (!(musics.get(j).getTitle().contains(word) || musics.get(j).getArtist().contains(word)))  {
                     selectedMusics.remove(musics.get(j));

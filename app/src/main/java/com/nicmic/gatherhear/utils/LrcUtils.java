@@ -2,7 +2,6 @@ package com.nicmic.gatherhear.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 import com.nicmic.gatherhear.App;
 import com.nicmic.gatherhear.R;
@@ -57,10 +56,10 @@ public class LrcUtils {
             String filepath = PlayList.getPlayingMusic().getPath();
             String filename = filepath.substring(filepath.lastIndexOf("/") + 1).replace("mp3", "lrc");
             File file = new File(FileUtils.getLrcFile() + filename);
-            Log.e(TAG, FileUtils.getLrcFile() + filename);
+            LogUtils.e(TAG, FileUtils.getLrcFile() + filename);
             //获取文件编码
             String codeString = codeString(file);
-            Log.e("编码", codeString);
+            LogUtils.e("编码", codeString);
 
             InputStream is = new FileInputStream(file);
             InputStreamReader inputReader = new InputStreamReader(is, codeString);
@@ -141,7 +140,7 @@ public class LrcUtils {
     private static boolean saveNewOffset(String lrc, long oldOffset, long newOffset) {
         //修改字符串
         lrc = lrc.replace("offset:" + oldOffset, "offset:" + newOffset);
-        Log.e(TAG, "旧的偏移量:" + oldOffset + ",新的偏移量:" + newOffset);
+        LogUtils.e(TAG, "旧的偏移量:" + oldOffset + ",新的偏移量:" + newOffset);
 
         //保存字符串
         String filepath = PlayList.getPlayingMusic().getPath();
@@ -159,11 +158,11 @@ public class LrcUtils {
             bos.flush();
             bos.close();
         } catch (FileNotFoundException e) {
-            Log.e("LrcUtils", e.getMessage());
+            LogUtils.e("LrcUtils", e.getMessage());
             e.printStackTrace();
             return false;
         } catch (IOException e) {
-            Log.e("LrcUtils", e.getMessage());
+            LogUtils.e("LrcUtils", e.getMessage());
             e.printStackTrace();
             return false;
         }
@@ -179,11 +178,11 @@ public class LrcUtils {
         try{
             do{
                 line = br.readLine();
-                Log.e("asdadasdasdasdasdasd", line);
+                LogUtils.e("asdadasdasdasdasdasd", line);
                 //判断offset
                 if (line.length() >= 10  && line.substring(1, 7).equals("offset")) {
                     String offsetStr = line.substring(8, line.lastIndexOf("]"));
-                    Log.e("offsetStr", offsetStr);
+                    LogUtils.e("offsetStr", offsetStr);
                     try {
                         offset = Integer.parseInt(offsetStr);
                     } catch (Exception e) {
@@ -220,7 +219,7 @@ public class LrcUtils {
         BufferedInputStream bin = new BufferedInputStream(
                 new FileInputStream(file));
         int p = (bin.read() << 8) + bin.read();
-        Log.e("编码数字", p + "");
+        LogUtils.e("编码数字", p + "");
         String code = null;
 
         switch (p) {

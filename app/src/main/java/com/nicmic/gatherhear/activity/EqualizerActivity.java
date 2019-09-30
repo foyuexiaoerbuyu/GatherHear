@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.nicmic.gatherhear.R;
 import com.nicmic.gatherhear.bean.SoundEffect;
+import com.nicmic.gatherhear.utils.LogUtils;
 import com.r0adkll.slidr.Slidr;
 
 import java.util.ArrayList;
@@ -77,7 +78,7 @@ public class EqualizerActivity extends BaseActivity {
                 if (SoundEffect.mVirtualizer.getStrengthSupported()) {
                     SoundEffect.mVirtualizer.setStrength((short) progress);
                     SoundEffect.saveVirtualizer(EqualizerActivity.this, (short) progress);
-                    Log.e("EqualizerActivity", "设置环绕音强度为" + progress);
+                    LogUtils.e("EqualizerActivity", "设置环绕音强度为" + progress);
                 }
 
             }
@@ -109,7 +110,7 @@ public class EqualizerActivity extends BaseActivity {
                 if (SoundEffect.mBass.getStrengthSupported()) {
                     SoundEffect.mBass.setStrength((short) progress);
                     SoundEffect.saveBassBoost(EqualizerActivity.this, (short) progress);
-                    Log.e("EqualizerActivity", "设置重低音强度为" + progress);
+                    LogUtils.e("EqualizerActivity", "设置重低音强度为" + progress);
                 }
 
             }

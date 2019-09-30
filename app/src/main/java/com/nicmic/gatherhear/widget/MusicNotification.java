@@ -9,7 +9,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.media.app.NotificationCompat.MediaStyle;
-import android.util.Log;
 import android.widget.RemoteViews;
 
 import com.nicmic.gatherhear.App;
@@ -20,6 +19,7 @@ import com.nicmic.gatherhear.fragment.ContainerActivity;
 import com.nicmic.gatherhear.receiver.MusicReceiver;
 import com.nicmic.gatherhear.service.MusicService;
 import com.nicmic.gatherhear.utils.ImageUtils;
+import com.nicmic.gatherhear.utils.LogUtils;
 
 /**
  * Created by Administrator on 2015/10/19.
@@ -117,7 +117,7 @@ public class MusicNotification {
         Notification notification = builder.build();
 
         manager.notify(NOTIFICATION_COMMON, notification);
-        Log.e("MusicNotification", "显示了通知showCommonNotification");
+        LogUtils.e("MusicNotification", "显示了通知showCommonNotification");
 
     }
 

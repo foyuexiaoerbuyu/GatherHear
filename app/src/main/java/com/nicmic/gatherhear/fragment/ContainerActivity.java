@@ -199,7 +199,7 @@ public class ContainerActivity extends BaseActivity implements View.OnClickListe
 
         //刷新UI(必须放在oncreate创建完后的周期中，否则Fragment的getActivity()获得的上下文都是null)
         MusicService.updateUI();
-        Log.e("ContainerActivity", "刷新UI");
+        LogUtils.e("ContainerActivity", "刷新UI");
 
     }
 
@@ -223,7 +223,7 @@ public class ContainerActivity extends BaseActivity implements View.OnClickListe
             //更新底部音乐的进度条为最近一次保存的状态
             int progress = MusicUtils.getPlayListProgress(this);
             int duration = MusicUtils.getPlayListDuration(this);
-            Log.e("ContainerActivity", MusicUtils.getTimeString(progress) + "/" + MusicUtils.getTimeString(duration));
+            LogUtils.e("ContainerActivity", MusicUtils.getTimeString(progress) + "/" + MusicUtils.getTimeString(duration));
             bottom_music_progress_text.setText(MusicUtils.getTimeString(progress) + "/" + MusicUtils.getTimeString(duration));
             bottom_music_front.setMaxProgress(duration);
             bottom_music_front.setCurrentProgress(progress);
@@ -252,10 +252,10 @@ public class ContainerActivity extends BaseActivity implements View.OnClickListe
         }
         if (MusicService.player != null && MusicService.player.isPlaying()){
             bottom_music_play_icon.setImageResource(R.drawable.btn_pause_circle_white);
-            Log.e("ContainerActivity", "更新为暂停图标");
+            LogUtils.e("ContainerActivity", "更新为暂停图标");
         }else {
             bottom_music_play_icon.setImageResource(R.drawable.btn_play_circle_white);
-            Log.e("ContainerActivity", "更新为播放图标");
+            LogUtils.e("ContainerActivity", "更新为播放图标");
         }
 
         //设置专辑图片
@@ -512,7 +512,7 @@ public class ContainerActivity extends BaseActivity implements View.OnClickListe
                 tv_title_and_num.setText("播放列表(" + PlayList.musics.size() + ")");
                 playList.setSelection(PlayList.position);
                 adapter_playlist.notifyDataSetInvalidated();
-                Log.e("ContainerActivity", "更新播放列表并定位到当前播放位置");
+                LogUtils.e("ContainerActivity", "更新播放列表并定位到当前播放位置");
             }
         }
     }
@@ -551,7 +551,7 @@ public class ContainerActivity extends BaseActivity implements View.OnClickListe
         //保存当前播放歌曲的进度和时长
         MusicUtils.saveProgressDuration();
 
-        Log.e("ContainerActivity", "所有fragment和用到的静态成员变量都需要在这个方法里置为null，" +
+        LogUtils.e("ContainerActivity", "所有fragment和用到的静态成员变量都需要在这个方法里置为null，" +
                 "否则下次启动页面内容为空，类的静态成员变量不会随着实例被销毁");
         /**
          * 类的实例被销毁了，但类的静态成员变量和方法还存在

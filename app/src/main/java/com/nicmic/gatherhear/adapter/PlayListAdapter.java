@@ -19,6 +19,7 @@ import com.nicmic.gatherhear.fragment.MusicMenuFragment;
 import com.nicmic.gatherhear.fragment.SongFragment;
 import com.nicmic.gatherhear.service.MusicService;
 import com.nicmic.gatherhear.utils.Dialogs;
+import com.nicmic.gatherhear.utils.LogUtils;
 import com.nicmic.gatherhear.utils.MusicUtils;
 import com.nicmic.gatherhear.utils.SongUtils;
 
@@ -99,7 +100,7 @@ public class PlayListAdapter extends BaseAdapter {
         Music playingMusic = PlayList.getPlayingMusic();
         //2.有正在播放的音乐，判断当前播放的音乐是否在当前列表中，是的话把当前item设置为播放状态
         if (playingMusic != null && playingMusic.getId().equals(music.getId())) {
-            Log.e("SongListAdapter", "正在播放的item是：" + music.getTitle());
+            LogUtils.e("SongListAdapter", "正在播放的item是：" + music.getTitle());
 //            holder.item_music.setBackgroundResource(R.color.custom_color);
             holder.iv_equalizer.setVisibility(View.VISIBLE);
             holder.tv_id.setVisibility(View.GONE);

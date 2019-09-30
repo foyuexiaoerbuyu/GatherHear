@@ -1,13 +1,11 @@
 package com.nicmic.gatherhear.fragment;
 
-
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +27,7 @@ import com.nicmic.gatherhear.bean.MusicMenu;
 import com.nicmic.gatherhear.bean.PlayList;
 import com.nicmic.gatherhear.service.MusicService;
 import com.nicmic.gatherhear.utils.Dialogs;
+import com.nicmic.gatherhear.utils.LogUtils;
 import com.nicmic.gatherhear.utils.MusicUtils;
 import com.nicmic.gatherhear.utils.SongUtils;
 
@@ -53,10 +52,10 @@ public class MusicMenuFragment extends Fragment {
     public static final int RESET_UI = 2;
 
     public static Handler staticHandler;
-    private Handler handler = new Handler(){
+    private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            switch (msg.what){
+            switch (msg.what) {
                 case FOLD_Card:
                     mUnfoldableView.foldBack();
                     break;
@@ -89,7 +88,7 @@ public class MusicMenuFragment extends Fragment {
         mListView.setAdapter(adapter);
 
         //更新歌单展开后歌曲列表的状态
-        if (adapter_song != null){
+        if (adapter_song != null) {
             adapter_song.notifyDataSetChanged();
         }
     }
@@ -119,7 +118,7 @@ public class MusicMenuFragment extends Fragment {
     public void onHiddenChanged(boolean hidden) {
         if (!hidden) {
             updateUI();
-            Log.e("MusicMenuFragment", "显示了当前界面，刷新歌单信息");
+            LogUtils.e("MusicMenuFragment", "显示了当前界面，刷新歌单信息");
         }
     }
 
@@ -177,6 +176,7 @@ public class MusicMenuFragment extends Fragment {
     private ImageButton btn_back;
     private ImageButton btn_menu;
     private TextView tv_navbar_title;
+
     private void initHeaderView(View view) {
         //必须传入参数view，getActivity获取的不一定是当前fragment（原因不明）
         btn_back = (ImageButton) view.findViewById(R.id.btn_back);
@@ -256,6 +256,7 @@ public class MusicMenuFragment extends Fragment {
     private SongListAdapter adapter_song;//歌单展开后歌曲列表的适配器
     private SwipeMenuListView details_lv;//歌单展开后的列表
     private MusicMenu musicMenu;//所展开的歌单
+
     private void setupListView(final SwipeMenuListView details_lv, MusicMenu musicMenu1) {
         this.musicMenu = musicMenu1;
         adapter_song = new SongListAdapter(getActivity(), musicMenu.getMusics());
@@ -267,7 +268,7 @@ public class MusicMenuFragment extends Fragment {
             public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
                 switch (index) {
                     case 0:
-                        addOrRemoveMyLike(musicMenu ,position, details_lv, adapter_song);
+                        addOrRemoveMyLike(musicMenu, position, details_lv, adapter_song);
                         break;
                     case 1:
                         Dialogs.add2MusicMenuDialog(getActivity(), musicMenu.getMusics().get(position));
@@ -298,17 +299,18 @@ public class MusicMenuFragment extends Fragment {
 
     /**
      * 添加或移除我喜欢的
+     *
      * @param musicMenu
      * @param position
      * @param details_lv
      * @param adapter
      */
-    private void addOrRemoveMyLike(MusicMenu musicMenu, int position, SwipeMenuListView details_lv, SongListAdapter adapter){
+    private void addOrRemoveMyLike(MusicMenu musicMenu, int position, SwipeMenuListView details_lv, SongListAdapter adapter) {
         int myLike = Dialogs.add2LikeDialog(getActivity(), musicMenu.getMusics().get(position));
         musicMenu.getMusics().get(position).setMyLike(myLike);
         //如果播放列表有这首歌曲，则也更新喜欢状态
         for (int i = 0; i < PlayList.musics.size(); i++) {
-            if (PlayList.musics.get(i).getId().equals(musicMenu.getMusics().get(position).getId())){
+            if (PlayList.musics.get(i).getId().equals(musicMenu.getMusics().get(position).getId())) {
                 PlayList.musics.get(i).setMyLike(myLike);
             }
         }
@@ -318,6 +320,8 @@ public class MusicMenuFragment extends Fragment {
         details_lv.setAdapter(adapter);
         details_lv.setSelection(firstVisiblePosition);
         adapter.notifyDataSetInvalidated();
-    };
+    }
+
+    ;
 
 }

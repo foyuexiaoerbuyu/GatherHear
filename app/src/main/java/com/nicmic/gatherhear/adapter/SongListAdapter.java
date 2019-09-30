@@ -15,6 +15,7 @@ import com.nicmic.gatherhear.bean.Music;
 import com.nicmic.gatherhear.bean.PlayList;
 import com.nicmic.gatherhear.service.MusicService;
 import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.undo.UndoAdapter;
+import com.nicmic.gatherhear.utils.LogUtils;
 
 import java.util.List;
 
@@ -80,7 +81,7 @@ public class SongListAdapter extends BaseAdapter implements UndoAdapter{
         Music playingMusic = PlayList.getPlayingMusic();
         //2.有正在播放的音乐，判断当前播放的音乐是否在当前列表中，是的话把当前item设置为播放状态
         if (playingMusic != null && playingMusic.getId() != null && playingMusic.getId().equals(music.getId())){
-            Log.e("SongListAdapter", "正在播放的item是：" + music.getTitle());
+            LogUtils.e("SongListAdapter", "正在播放的item是：" + music.getTitle());
 //            holder.item_music.setBackgroundResource(R.color.custom_color);
             holder.iv_equalizer.setVisibility(View.VISIBLE);
             holder.tv_id.setVisibility(View.GONE);
